@@ -1,5 +1,5 @@
 #!/bin/bash
-# wechat-article-digest: 微信公众号文章摘要生成脚本
+# wechat-article-digest: 微信公众号文章摘要生成脚本（独立版）
 # 优化版：抓取 + 总结 + 自动入库 IMA 知识库 + 笔记
 # 用途：获取文章 → Agent 生成摘要 → 自动分类 → 原文入库 + 笔记入库
 
@@ -11,10 +11,12 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-FETCH_SCRIPT="SKILL_DIR/markdown-proxy/scripts/fetch_weixin.py"
-TEMPLATE_FILE="SKILL_DIR/wechat-article-digest/scripts/summarize-template.md"
-GUIDE_FILE="SKILL_DIR/wechat-article-digest/references/summary-guide.md"
-SAVE_SCRIPT="SKILL_DIR/wechat-article-digest/scripts/save-to-ima.py"
+# ── 路径配置（基于脚本自身位置，无需硬编码）──
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+FETCH_SCRIPT="${SCRIPT_DIR}/fetch_weixin.py"
+TEMPLATE_FILE="${SCRIPT_DIR}/summarize-template.md"
+GUIDE_FILE="${SCRIPT_DIR}/../references/summary-guide.md"
+SAVE_SCRIPT="${SCRIPT_DIR}/save-to-ima.py"
 TEMP_DIR="/tmp/wechat-digest"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 TEMP_MD="${TEMP_DIR}/article_${TIMESTAMP}.md"
@@ -34,7 +36,7 @@ URL="$1"
 # 验证 URL
 if [[ "$URL" != *"mp.weixin.qq.com"* ]]; then
     echo -e "${RED}错误：仅支持微信公众号文章 (mp.weixin.qq.com)${NC}"
-    echo "提示：普通网页请使用 markdown-proxy 技能的 fetch.sh"
+    echo "提示：普通网页请使用其他抓取工具"
     exit 1
 fi
 
@@ -48,6 +50,7 @@ echo -e "${GREEN}[1/3] 抓取文章内容...${NC}"
 
 if [ ! -f "$FETCH_SCRIPT" ]; then
     echo -e "${RED}错误：抓取脚本不存在 (${FETCH_SCRIPT})${NC}"
+    echo "请确保 fetch_weixin.py 在同一目录下"
     exit 1
 fi
 
@@ -134,12 +137,16 @@ echo ""
 # 输出指南要点
 echo ""
 echo "### 📖 总结指南要点"
-cat "$GUIDE_FILE" | grep -A 3 "^## " | head -60
-echo ""
-echo "(完整指南见: ${GUIDE_FILE})"
-echo ""
+if [ -f "$GUIDE_FILE" ]; then
+    cat "$GUIDE_FILE" | grep -A 3 "^## " | head -60
+    echo ""
+    echo "(完整指南见: ${GUIDE_FILE})"
+else
+    echo "(未找到指南文件)"
+fi
 
 # ── Step 3: 输出文章内容 ──
+echo ""
 echo -e "${GREEN}[3/3] 输出文章全文...${NC}"
 echo ""
 echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -160,27 +167,13 @@ echo ""
 echo -e "${GREEN}━━━ 任务完成 ━━━${NC}"
 echo -e "  文章内容: ${TEMP_MD}"
 echo -e "  元数据文件: ${META_FILE}"
-echo -e "  摘要模板: ${TEMPLATE_FILE}"
-echo -e "  总结指南: ${GUIDE_FILE}"
 echo ""
 echo -e "${YELLOW}━━━ 下一步：生成摘要后自动入库 ━━━${NC}"
 echo ""
 echo "摘要生成完成后，请按以下步骤入库："
 echo ""
 echo "1. 将完整摘要保存到文件（如 /tmp/digest_xxx.md）"
-echo "2. 确定分类和标签："
-echo ""
-echo "   可选分类:"
-echo "   📊 宏观策略 — 宏观经济、大类资产、货币财政"
-echo "   🏭 行业研究 — 行业分析、产业链研究"
-echo "   📈 量化投资 — 因子研究、策略回测、择时体系"
-echo "   🤖 AI与科技 — LLM、Agent、工具链、产品"
-echo "   🧠 投资框架 — 投资方法论、思维模型"
-echo "   🚀 产品与创业 — SaaS、互联网、商业分析"
-echo "   📖 日常阅读 — 其他杂项"
-echo ""
-echo "   文章类型: 宏观报告 / 行业研究 / 策略框架 / 技术分析 / 观点评论 / 深度长文"
-echo "   重要度: 1-5 星（⭐⭐⭐⭐⭐）"
+echo "2. 确定分类和标签"
 echo ""
 echo "3. 执行入库命令:"
 echo ""
@@ -190,10 +183,3 @@ echo "     --category \"<分类>\" \\"
 echo "     --tags \"标签1,标签2,标签3\" \\"
 echo "     --title \"[分类] 文章标题\" \\"
 echo "     --digest-file /tmp/digest_xxx.md"
-echo ""
-echo "   脚本会自动完成:"
-echo "   ✅ 原文导入 IMA 知识库"
-echo "   ✅ 摘要创建 IMA 笔记（含分类、标签、入库信息）"
-echo ""
-echo "4. 仅导入原文（不创建笔记）:"
-echo "   python3 ${SAVE_SCRIPT} --url \"${URL}\" --category \"<分类>\""

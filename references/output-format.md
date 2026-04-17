@@ -117,7 +117,7 @@ TLDR (10秒) → 方法论 (30秒) → 结论 (1分钟) → 观点 (2分钟) →
 
 ---
 
-*生成时间: [YYYY-MM-DD HH:MM] | PicoClaw - wechat-article-digest*
+*生成时间: [YYYY-MM-DD HH:MM] | OpenClaw - wechat-article-digest*
 ```
 
 ---
@@ -303,5 +303,5 @@ TLDR (10秒) → 方法论 (30秒) → 结论 (1分钟) → 观点 (2分钟) →
 
 ---
 
-*生成时间: 2026-04-07 23:42 | PicoClaw - wechat-article-digest*
+*生成时间: 2026-04-07 23:42 | OpenClaw - wechat-article-digest*
 ```

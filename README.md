@@ -1,6 +1,6 @@
 # wechat-article-digest
 
-> 微信公众号文章深度摘要生成 + 自动知识库入库技能（PicoClaw AgentSkill）
+> 微信公众号文章深度摘要生成 + 自动知识库入库技能（OpenClaw AgentSkill）
 
 ## ✨ 特性
 
@@ -31,14 +31,14 @@ wechat-article-digest/
 
 ### 前置依赖
 
-- [PicoClaw](https://github.com/openclaw/picoclaw) Agent 运行环境
+- [OpenClaw](https://github.com/openclaw/openclaw) Agent 运行环境
 - `markdown-proxy` 技能（提供 `fetch_weixin.py` 微信抓取脚本）
 - `ima-skill` 技能（提供 IMA 知识库/笔记 API）
 - IMA API 凭证（`~/.config/ima/client_id` + `~/.config/ima/api_key`）
 
 ### 基本用法
 
-将 `scripts/` 和 `references/` 放置到 PicoClaw 技能目录，然后：
+将 `scripts/` 和 `references/` 放置到 OpenClaw 技能目录，然后：
 
 ```bash
 # Step 1: 抓取文章并生成摘要指引
@@ -133,4 +133,4 @@ KB_ID = "your_knowledge_base_id_here"
 
 - 微信公众号平台
 - [IMA](https://ima.qq.com) 知识管理平台
-- [PicoClaw](https://github.com/openclaw/picoclaw) Agent 框架
+- [OpenClaw](https://github.com/openclaw/openclaw) Agent 框架

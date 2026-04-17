@@ -85,7 +85,7 @@ TLDR (10秒) → 核心方法论 (30秒) → 核心结论 (1分钟)
 ### Step 1: 抓取文章
 
 ```bash
-bash /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/fetch-and-digest.sh \
+bash /root/.openclaw/workspace/skills/wechat-article-digest/scripts/fetch-and-digest.sh \
   "https://mp.weixin.qq.com/s/xxxxx"
 ```
 
@@ -104,7 +104,7 @@ bash /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/fetch-and-di
 将摘要保存为 Markdown 文件后执行：
 
 ```bash
-python3 /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/save-to-ima.py \
+python3 /root/.openclaw/workspace/skills/wechat-article-digest/scripts/save-to-ima.py \
   --url "https://mp.weixin.qq.com/s/xxxxx" \
   --category "AI与科技" \
   --tags "知识管理,Karpathy,LLM,知识库" \
@@ -126,7 +126,7 @@ python3 /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/save-to-i
 #### 仅导入原文（不创建笔记）
 
 ```bash
-python3 /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/save-to-ima.py \
+python3 /root/.openclaw/workspace/skills/wechat-article-digest/scripts/save-to-ima.py \
   --url "https://mp.weixin.qq.com/s/xxxxx" \
   --category "宏观策略"
 ```
@@ -148,7 +148,7 @@ python3 /root/.picoclaw/workspace/skills/wechat-article-digest/scripts/save-to-i
 | **原文链接** | https://mp.weixin.qq.com/s/xxx |
 | **入库时间** | 2026-04-08 00:06 |
 
-*PicoClaw 自动入库*
+*OpenClaw 自动入库*
 ```
 
 ## 输出文件

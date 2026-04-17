@@ -383,7 +383,7 @@ def main():
 | **原文链接** | {args.url} |
 | **入库时间** | {now} |
 
-*PicoClaw 自动入库 | IMA 不支持原生 tags，标签内嵌在正文中便于检索*"""
+*OpenClaw 自动入库 | IMA 不支持原生 tags，标签内嵌在正文中便于检索*"""
         full_content = digest_content + meta_block
 
         doc_id, err = create_note(full_content, note_title, client_id, api_key)

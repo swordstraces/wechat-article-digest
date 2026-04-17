@@ -104,4 +104,4 @@
 
 ---
 
-*生成时间: [YYYY-MM-DD HH:MM] | PicoClaw - wechat-article-digest*
+*生成时间: [YYYY-MM-DD HH:MM] | OpenClaw - wechat-article-digest*
